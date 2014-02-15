@@ -1,0 +1,9 @@
+<!-- Test if the User is connected -->
+<?php if(!$this->zfcUserIdentity()): ?>
+    <!-- display the login form -->
+    <?php echo $this->zfcUserLoginWidget(array('redirect'=>'application')); ?>
+<?php else: ?>
+    <!-- display the 'display name' of the user -->
+    <h2><?php echo $this->zfcUserIdentity()->getDisplayname(); ?></h2>
+    <p><?php echo $this->zfcUserIdentity()->getEmail(); ?></p>
+<?php endif?>
