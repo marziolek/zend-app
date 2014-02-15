@@ -13,7 +13,7 @@ return array(
             'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/info-manager',
+                    'route'    => '/',
                     'defaults' => array(
                         'controller' => 'InfoManager\Controller\Index',
                         'action'     => 'index',

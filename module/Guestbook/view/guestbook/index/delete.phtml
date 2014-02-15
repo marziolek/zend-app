@@ -1,0 +1,36 @@
+<?php
+// Find me in /module/Guestbook/view/guestbook/delete.phtml
+
+$title = 'Guestbook#delete';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<p>Are you sure that you want to delete:</p>
+<table class="table">
+<tr>
+    <th>Id</th>
+    <th>Created At</th>
+    <th>Is Active</th>
+    <th>Nick</th>
+</tr>
+    <tr>
+        <td><?php echo $this->escapeHtml($guestbook->id);?></td>
+        <td><?php echo $this->escapeHtml($guestbook->created_at);?></td>
+        <td><?php echo ($this->escapeHtml($guestbook->is_active) ? '&#10003;' : "");?></td>
+        <td><?php echo $this->escapeHtml($guestbook->nick);?></td>
+    </tr>
+</table>
+<?php
+$url = $this->url('guestbook', array(
+    'action' => 'delete',
+    'id'     => $this->id,
+));
+?>
+<form action="<?php echo $url; ?>" method="post">
+<div>
+    <input type="hidden" name="id" value="<?php echo (int) $guestbook->id; ?>" />
+    <input type="submit" name="del" value="Yes" />
+    <input type="submit" name="del" value="No" />
+</div>
+</form>

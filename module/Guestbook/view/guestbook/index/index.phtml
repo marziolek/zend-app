@@ -1,0 +1,39 @@
+<?php
+$title = 'Guestbook';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('guestbook', array('action'=>'add'));?>">Add new record</a>
+</p>
+
+<table class="table">
+<tr>
+    <th>Id</th>
+    <th>Created At</th>
+    <th>Is Active</th>
+    <th>Nick</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($this->paginator as $record) : ?>
+    <tr>
+        <td><?php echo $this->escapeHtml($record->id);?></td>
+        <td><?php echo $this->escapeHtml($record->created_at);?></td>
+        <td><?php echo ($this->escapeHtml($record->is_active) ? '&#10003;' : "");?></td>
+        <td><?php echo $this->escapeHtml($record->nick);?></td>
+        <td>
+            <a href="<?php echo $this->url('guestbook', array('action'=>'edit', 'id' => $record->id));?>">Edit</a>
+            <a href="<?php echo $this->url('guestbook', array('action'=>'delete', 'id' => $record->id));?>">Delete</a>
+        </td>
+    </tr>
+<?php endforeach; ?>
+</table>
+
+<?php echo $this->paginationControl(
+    $this->paginator,
+    'sliding',
+    array('partials/paginator.phtml', 'Guestbook'),
+    array(
+        'route' => 'guestbook'
+    )
+); ?>

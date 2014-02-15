@@ -1,0 +1,16 @@
+<?php
+    $title = 'Guestbook#edit';
+    $this->headTitle($title);
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+    $form->setAttribute('action', $this->url(
+    'guestbook',
+    array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    )
+));
+    echo $this->renderForm($form);
