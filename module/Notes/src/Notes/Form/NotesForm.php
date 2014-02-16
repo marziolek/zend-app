@@ -44,7 +44,6 @@ class NotesForm extends Form
             'name' => 'user_id',
             'type' => 'hidden',
             'attributes' => array(
-              'value' => $this->user_id,
               'id' => 'user_id',
             ),
         ));

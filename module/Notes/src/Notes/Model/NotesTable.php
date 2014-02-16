@@ -38,10 +38,10 @@ class NotesTable
         return $resultSet;
     }
 
-    public function getNotes($id)
+    public function getNotes($id, $user_id)
     {
         $id  = (int) $id;
-        $rowset = $this->tableGateway->select(array('note_id' => $id));
+        $rowset = $this->tableGateway->select(array('note_id' => $id,'user_id' => $user_id));
         $row = $rowset->current();
         if (!$row) {
             throw new \Exception("Could not find row $id");
@@ -49,7 +49,7 @@ class NotesTable
         return $row;
     }
 
-    public function saveNotes(Notes $notes)
+    public function saveNotes(Notes $notes,$user_id)
     {
          $data = array(
             'note_title' => $notes->note_title,
@@ -62,8 +62,8 @@ class NotesTable
          if ($id == 0) {
              $this->tableGateway->insert($data);
          } else {
-             if ($this->getNotes($id)) {
-                 $this->tableGateway->update($data, array('note_id' => $id));
+             if ($this->getNotes($id,$user_id)) {
+                 $this->tableGateway->update($data, array('note_id' => $id,'user_id' => $user_id));
              } else {
                  throw new \Exception('Notes id does not exist');
              }

@@ -16,13 +16,6 @@ class IndexController extends AbstractActionController
 
   public function getNotesTable()
   {
-
-/*    $service = $this->getServiceManager();
-    $auth = $service->get('zfcuser_auth_service');
-    if ($auth->hasIdentity()) {
-          echo $auth->getIdentity()->getId();
-    }
- */
     if (!$this->_notesTable) {
       $sm = $this->getServiceLocator();
       $this->_notesTable = $sm->get('Notes\Model\NotesTable');
@@ -48,13 +41,19 @@ class IndexController extends AbstractActionController
       ));
     }
   }
+  
+  public function userId() 
+  {
+     if ($this->zfcUserAuthentication()->hasIdentity())
+     {
+        $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
+     }
+     return $user_id;
+  }
 
   public function addAction()
   {
-    if ($this->zfcUserAuthentication()->hasIdentity())
-    {
-      $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
-    }
+    $user_id = $this->userId();
     $form = new NotesForm();
     $form->get('user_id')->setValue($user_id); 
     $form->get('submit')->setValue('Add');
@@ -66,7 +65,7 @@ class IndexController extends AbstractActionController
       $form->setData($request->getPost());
       if ($form->isValid()) {
         $notes->exchangeArray($form->getData());
-        $this->getNotesTable()->saveNotes($notes);
+        $this->getNotesTable()->saveNotes($notes,$user_id);
         return $this->redirect()->toRoute('notes');
       }
     }
@@ -81,7 +80,8 @@ class IndexController extends AbstractActionController
         'action' => 'add'
       ));
     }
-    $notes = $this->getNotesTable()->getNotes($id);
+    $user_id = $this->userId();
+    $notes = $this->getNotesTable()->getNotes($id,$user_id);
 
     $form = new NotesForm();
     $form->bind($notes);
@@ -93,7 +93,7 @@ class IndexController extends AbstractActionController
       $form->setData($request->getPost());
 
       if ($form->isValid()) {
-        $this->getNotesTable()->saveNotes($form->getData());
+        $this->getNotesTable()->saveNotes($form->getData(),$user_id);
       } else {
         return new ViewModel(array(
           'id' => $id,
@@ -128,10 +128,11 @@ class IndexController extends AbstractActionController
 
       return $this->redirect()->toRoute('notes');
     }
+    $user_id = $this->userId();
 
     return new ViewModel(array(
       'id'    => $id,
-      'notes' => $this->getNotesTable()->getNotes($id)
+      'notes' => $this->getNotesTable()->getNotes($id,$user_id)
     ));
   }
 
