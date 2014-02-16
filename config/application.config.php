@@ -11,8 +11,9 @@ return array(
         'ScnSocialAuth',
         'ZfcBase',
         'ZfcUser',
-        'InfoManager',
         'FormExample',
+        'InfoManager',
+        'Notes',
         'Guestbook'
         ),
     'module_listener_options' => array(

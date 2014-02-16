@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS `notes` ( 
+  `note_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `created_at` datetime NOT NULL,
+  `note_title` varchar(80) NOT NULL,
+  `note_body` text NOT NULL,
+  `user_id` int,
+  PRIMARY KEY (`note_id`),
+  FOREIGN KEY (`user_id`) REFERENCES user(`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+INSERT INTO `notes` (`note_id`, `created_at`, `note_title`, `note_body`, `user_id`) VALUES
+(1, '2013-11-04 00:00:00', 'First note', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id sollicitudin magna, sed vehicula mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent varius semper ligula. Morbi vel risus blandit mauris pulvinar viverra vitae ut sem. Duis a eros porta, convallis quam non, pellentesque mauris. Maecenas tincidunt, tellus vel imperdiet dapibus, dui lectus scelerisque magna, sed feugiat enim metus nec lectus. Sed sed est dapibus, vulputate dolor id, fermentum sapien. Aenean rhoncus, neque sit amet fermentum tristique, felis enim bibendum enim, ut consectetur est metus sed urna. Curabitur molestie ullamcorper mi egestas consequat. Vestibulum nec leo arcu.', 2),
+(2, '2013-11-04 00:00:00', 'Second note', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id sollicitudin magna, sed vehicula mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent varius semper ligula. Morbi vel risus blandit mauris pulvinar viverra vitae ut sem. Duis a eros porta, convallis quam non, pellentesque mauris. Maecenas tincidunt, tellus vel imperdiet dapibus, dui lectus scelerisque magna, sed feugiat enim metus nec lectus. Sed sed est dapibus, vulputate dolor id, fermentum sapien. Aenean rhoncus, neque sit amet fermentum tristique, felis enim bibendum enim, ut consectetur est metus sed urna. Curabitur molestie ullamcorper mi egestas consequat. Vestibulum nec leo arcu.', 2),
+(3, '2014-01-04 00:07:00', 'Asd note', 'ASD Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id sollicitudin magna, sed vehicula mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent varius semper ligula. Morbi vel risus blandit mauris pulvinar viverra vitae ut sem. Duis a eros porta, convallis quam non, pellentesque mauris. Maecenas tincidunt, tellus vel imperdiet dapibus, dui lectus scelerisque magna, sed feugiat enim metus nec lectus. Sed sed est dapibus, vulputate dolor id, fermentum sapien. Aenean rhoncus, neque sit amet fermentum tristique, felis enim bibendum enim, ut consectetur est metus sed urna. Curabitur molestie ullamcorper mi egestas consequat. Vestibulum nec leo arcu.', 1)

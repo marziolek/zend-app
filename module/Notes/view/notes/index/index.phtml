@@ -1,0 +1,40 @@
+<?php
+$title = 'My notes';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('notes', array('action'=>'add'));?>">Add new record</a>
+</p>
+
+<table class="table">
+<tr>
+    <th>Note ID</th>
+    <th>Title</th>
+    <th>Body</th>
+    <th>Created At</th>
+</tr>
+<?php foreach ($this->paginator as $record) : ?>
+    <tr>
+        <td><?php echo $this->escapeHtml($record->note_id);?></td>
+        <td><?php echo $this->escapeHtml($record->note_title);?></td>
+        <td><?php echo $this->escapeHtml($record->note_body);?></td>
+        <td><?php echo $this->escapeHtml($record->created_at);?></td>
+        <td>
+            <a href="<?php echo $this->url('notes', array('action'=>'edit', 'id' => $record->note_id));?>">Edit</a>
+            <a href="<?php echo $this->url('notes', array('action'=>'delete', 'id' => $record->note_id));?>">Delete</a>
+        </td>
+    </tr>
+<?php endforeach; ?>
+</table>
+
+<?php 
+echo $this->paginationControl(
+  $this->paginator,
+  'sliding',
+  array('partials/paginator.phtml', 'Notes'),
+  array(
+    'route' => 'notes'
+  )
+);
+?>

@@ -1,26 +1,33 @@
 <?php
 
-namespace Guestbook\Controller;
+namespace Notes\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Guestbook\Form\GuestbookForm;
-use Guestbook\Form\GuestbookInputFilter;
-use Guestbook\Model\Guestbook;
+use Notes\Form\NotesForm;
+use Notes\Form\NotesInputFilter;
+use Notes\Model\Notes;
 
 
 class IndexController extends AbstractActionController
 {
 
-  protected $_guestbookTable;
+  protected $_notesTable;
 
-  public function getGuestbookTable()
+  public function getNotesTable()
   {
-    if (!$this->_guestbookTable) {
-      $sm = $this->getServiceLocator();
-      $this->_guestbookTable = $sm->get('Guestbook\Model\GuestbookTable');
+
+/*    $service = $this->getServiceManager();
+    $auth = $service->get('zfcuser_auth_service');
+    if ($auth->hasIdentity()) {
+          echo $auth->getIdentity()->getId();
     }
-    return $this->_guestbookTable;
+ */
+    if (!$this->_notesTable) {
+      $sm = $this->getServiceLocator();
+      $this->_notesTable = $sm->get('Notes\Model\NotesTable');
+    }
+    return $this->_notesTable;
   }
 
   public function indexAction()
@@ -31,7 +38,8 @@ class IndexController extends AbstractActionController
     }
     else 
     {
-      $paginator = $this->getGuestbookTable()->fetchAll(true);
+      $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
+      $paginator = $this->getNotesTable()->fetchAll(true,$user_id);
       $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
       $paginator->setItemCountPerPage(5);
 
@@ -43,18 +51,23 @@ class IndexController extends AbstractActionController
 
   public function addAction()
   {
-    $form = new GuestbookForm();
+    if ($this->zfcUserAuthentication()->hasIdentity())
+    {
+      $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
+    }
+    $form = new NotesForm();
+    $form->get('user_id')->setValue($user_id); 
     $form->get('submit')->setValue('Add');
 
     $request = $this->getRequest();
     if ($request->isPost()) {
-      $guestbook = new Guestbook();
-      $form->setInputFilter(new guestbookInputFilter());
+      $notes = new Notes();
+      $form->setInputFilter(new notesInputFilter());
       $form->setData($request->getPost());
       if ($form->isValid()) {
-        $guestbook->exchangeArray($form->getData());
-        $this->getGuestbookTable()->saveGuestbook($guestbook);
-        return $this->redirect()->toRoute('guestbook');
+        $notes->exchangeArray($form->getData());
+        $this->getNotesTable()->saveNotes($notes);
+        return $this->redirect()->toRoute('notes');
       }
     }
     return new ViewModel(array('form' => $form));
@@ -64,23 +77,23 @@ class IndexController extends AbstractActionController
   {
     $id = (int) $this->params()->fromRoute('id', 0);
     if (!$id) {
-      return $this->redirect()->toRoute('guestbook', array(
+      return $this->redirect()->toRoute('notes', array(
         'action' => 'add'
       ));
     }
-    $guestbook = $this->getGuestbookTable()->getGuestbook($id);
+    $notes = $this->getNotesTable()->getNotes($id);
 
-    $form = new GuestbookForm();
-    $form->bind($guestbook);
+    $form = new NotesForm();
+    $form->bind($notes);
     $form->get('submit')->setValue('Update');
 
     $request = $this->getRequest();
     if ($request->isPost()) {
-      $form->setInputFilter(new guestbookInputFilter());
+      $form->setInputFilter(new notesInputFilter());
       $form->setData($request->getPost());
 
       if ($form->isValid()) {
-        $this->getGuestbookTable()->saveGuestbook($form->getData());
+        $this->getNotesTable()->saveNotes($form->getData());
       } else {
         return new ViewModel(array(
           'id' => $id,
@@ -88,7 +101,7 @@ class IndexController extends AbstractActionController
         ));
       }
 
-      return $this->redirect()->toRoute('guestbook');
+      return $this->redirect()->toRoute('notes');
     }
 
     return new ViewModel(array(
@@ -101,7 +114,7 @@ class IndexController extends AbstractActionController
   {
     $id = (int) $this->params()->fromRoute('id', 0);
     if (!$id) {
-      return $this->redirect()->toRoute('guestbook');
+      return $this->redirect()->toRoute('notes');
     }
 
     $request = $this->getRequest();
@@ -110,15 +123,15 @@ class IndexController extends AbstractActionController
 
       if ($delete == 'Yes') {
         $id = (int) $request->getPost('id');
-        $this->getGuestbookTable()->deleteGuestbook($id);
+        $this->getNotesTable()->deleteNotes($id);
       }
 
-      return $this->redirect()->toRoute('guestbook');
+      return $this->redirect()->toRoute('notes');
     }
 
     return new ViewModel(array(
       'id'    => $id,
-      'guestbook' => $this->getGuestbookTable()->getGuestbook($id)
+      'notes' => $this->getNotesTable()->getNotes($id)
     ));
   }
 
