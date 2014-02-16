@@ -110,12 +110,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "2f05689f33a0ca6ea287de2aeb7ff4423d7d5166"
+                "reference": "6646859acdc6c4592a83496458df4f3e43686391"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/2f05689f33a0ca6ea287de2aeb7ff4423d7d5166",
-                "reference": "2f05689f33a0ca6ea287de2aeb7ff4423d7d5166",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/6646859acdc6c4592a83496458df4f3e43686391",
+                "reference": "6646859acdc6c4592a83496458df4f3e43686391",
                 "shasum": ""
             },
             "require": {
@@ -217,7 +217,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2014-02-13 17:31:48"
+            "time": "2014-02-15 14:35:43"
         },
         {
             "name": "zendframework/zftool",
