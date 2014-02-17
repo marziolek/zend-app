@@ -14,6 +14,7 @@ return array(
         'FormExample',
         'InfoManager',
         'Notes',
+        'Contacts',
         'Guestbook'
         ),
     'module_listener_options' => array(
