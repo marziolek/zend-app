@@ -11,6 +11,12 @@ return array(
         'ScnSocialAuth',
         'ZfcBase',
         'ZfcUser',
+        'FormExample',
+        'InfoManager',
+        'Notes',
+        'Contacts',
+        'BmCalendar',
+        'Guestbook'
         ),
     'module_listener_options' => array(
         'config_glob_paths' => array('config/autoload/{,*.}{global,local}.php'),

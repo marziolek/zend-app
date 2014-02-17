@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "bc7a7571485b3e13bad34b2ceb8e6057",
+    "hash": "48f89321d4fde6bb0599bc06f3014055",
     "packages": [
         {
             "name": "hybridauth/hybridauth",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hybridauth/hybridauth.git",
-                "reference": "6d89473b379fc7a904e69ee63f548af3308bd4d9"
+                "reference": "53c1ba645adad670b9ed6d41e5534692cb503c5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/6d89473b379fc7a904e69ee63f548af3308bd4d9",
-                "reference": "6d89473b379fc7a904e69ee63f548af3308bd4d9",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/53c1ba645adad670b9ed6d41e5534692cb503c5c",
+                "reference": "53c1ba645adad670b9ed6d41e5534692cb503c5c",
                 "shasum": ""
             },
             "require": {
@@ -52,7 +52,55 @@
                 "twitter",
                 "yahoo"
             ],
-            "time": "2013-02-21 06:45:16"
+            "time": "2014-02-15 19:36:23"
+        },
+        {
+            "name": "sclinternet/bm-calendar",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SCLInternet/BmCalendar.git",
+                "reference": "1e449f01d7a0f5edb12dacc6f4e594959c7a3bad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SCLInternet/BmCalendar/zipball/1e449f01d7a0f5edb12dacc6f4e594959c7a3bad",
+                "reference": "1e449f01d7a0f5edb12dacc6f4e594959c7a3bad",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zendframework": "2.*"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "1.4.0",
+                "phpunit/phpunit": "3.7.*",
+                "satooshi/php-coveralls": "dev-master",
+                "squizlabs/php_codesniffer": "1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "BmCalendar": "src/"
+                },
+                "classmap": [
+                    "./Module.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tom Oram",
+                    "email": "tom@scl.co.uk",
+                    "homepage": "http://github.com/tomphp"
+                }
+            ],
+            "description": "Calendar module which provide the ability to block off days.",
+            "homepage": "https://github.com/SCLInternet/SclZfUtilities",
+            "time": "2013-07-18 08:03:55"
         },
         {
             "name": "socalnick/scn-social-auth",
@@ -110,12 +158,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf2.git",
-                "reference": "6646859acdc6c4592a83496458df4f3e43686391"
+                "reference": "3f1d8eeca8ccc4a25bd6117150f4191c4ba76aa1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf2/zipball/6646859acdc6c4592a83496458df4f3e43686391",
-                "reference": "6646859acdc6c4592a83496458df4f3e43686391",
+                "url": "https://api.github.com/repos/zendframework/zf2/zipball/3f1d8eeca8ccc4a25bd6117150f4191c4ba76aa1",
+                "reference": "3f1d8eeca8ccc4a25bd6117150f4191c4ba76aa1",
                 "shasum": ""
             },
             "require": {
@@ -217,7 +265,7 @@
                 "framework",
                 "zf2"
             ],
-            "time": "2014-02-15 14:35:43"
+            "time": "2014-02-17 06:56:41"
         },
         {
             "name": "zendframework/zftool",
@@ -401,7 +449,8 @@
     "stability-flags": {
         "zendframework/zendframework": 20,
         "socalnick/scn-social-auth": 20,
-        "zendframework/zftool": 20
+        "zendframework/zftool": 20,
+        "sclinternet/bm-calendar": 20
     },
     "platform": {
         "php": ">=5.3.3"

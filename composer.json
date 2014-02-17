@@ -10,9 +10,10 @@
     "homepage": "http://framework.zend.com/",
     "require": {
       "php": ">=5.3.3",
-      "zendframework/zendframework": "dev-master",
-      "socalnick/scn-social-auth": "dev-master",
-    "zendframework/zftool": "dev-master"
+       "zendframework/zendframework": "dev-master",
+       "socalnick/scn-social-auth": "dev-master",
+       "zendframework/zftool": "dev-master",
+       "sclinternet/bm-calendar": "dev-master"
     },
     "autoload": {
       "psr-0": {

@@ -13,4 +13,5 @@ return array(
     'ScnSocialAuthTest' => array($vendorDir . '/socalnick/scn-social-auth/test'),
     'ScnSocialAuth' => array($vendorDir . '/socalnick/scn-social-auth/src'),
     'Hybrid' => array($vendorDir . '/hybridauth/hybridauth/hybridauth', $vendorDir . '/hybridauth/hybridauth/hybridauth'),
+    'BmCalendar' => array($vendorDir . '/sclinternet/bm-calendar/src'),
 );

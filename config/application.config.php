@@ -15,7 +15,9 @@ return array(
         'InfoManager',
         'Notes',
         'Contacts',
-        'Guestbook'
+        'BmCalendar',
+        'Guestbook',
+        'Calendar'
         ),
     'module_listener_options' => array(
         'config_glob_paths' => array('config/autoload/{,*.}{global,local}.php'),
