@@ -41,22 +41,48 @@ div.container a.brand {
 }
 .gravatar {
   float: left;
-  padding-right: 15px;
+  margin: 10px 40px 10px 20px;
 }
 .navbar-nav > li > a {
   padding: 21px;
 }
 .gravatar img {
   border-radius: 50%;
+  border-top-right-radius: 0%;
+  box-shadow:0 0 0 8px #1abc9c;
 }
 .profile-photo {
   padding: 10px !important;
+  margin: 0 !important;
 }
 .profile-photo img {
+  border-radius: 50%;
+  box-shadow:0 0 0 4px #1abc9c;
   width: 45px;
   transition: all 0.3s ease;
 }
 a.profile-photo:hover img {
   border-top-right-radius: 0%;
-  box-shadow:0 0 0 4px #1abc9c;
+}
+.calendar {
+  list-style: none;
+  padding: 0 10px;
+}
+.calendar li {
+  float: left;
+  height: 260px;
+}
+.calendar li > table {
+  margin: 0 auto;
+}
+.calendar tbody th,
+.calendar tbody td {
+  width: 42px;
+  text-align: center;
+}
+h1 {
+  text-align: right;
+}
+h2 {
+  text-align: center;
 }

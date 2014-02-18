@@ -23,17 +23,17 @@ class IndexController extends AbstractActionController
     {
 
     $name = (string) $this->params()->fromRoute('name', '');
-    $date = '2014, 02';
+    $year = date('Y');
+    $current_month = date('n');
 
     return new ViewModel(
       array(
         'name' => $name,
-        'date' => $date,
+        'year' => $year,
+        'month' => $current_month,
       )
     );
     }
   }
-
-
+  
 }
-

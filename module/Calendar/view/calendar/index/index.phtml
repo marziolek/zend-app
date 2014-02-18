@@ -5,5 +5,16 @@ $this->headTitle($title);
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <?php
 $calendar = new \BmCalendar\Calendar();
-echo $this->calendar($calendar)->showMonth(2014, 02);
-
+$year = $this->year;
+$month = $this->month;
+?>
+<h2>2014</h2>
+<ul class="calendar clearfix">
+<?php
+  for ($month; $month<13; $month++)
+  { 
+    $calendar_month = $this->calendar($calendar)->showMonth($year,$month);
+    echo '<li class="col-xs-4">'.$calendar_month.'</li>';
+  }
+?>
+</ul>

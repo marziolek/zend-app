@@ -42,7 +42,7 @@
 <?php
   if (!$this->zfcUserIdentity()) { 
 ?>
-                        <li><a href="<?php echo $this->url('zfcuser/login') ?>"><?php echo $this->translate('Log in') ?></a></li>
+                        <li><a href="<?php echo $this->url('zfcuser/login') ?>"><?php echo $this->translate('Sign in') ?></a></li>
                         <li><a href="<?php echo $this->url('zfcuser/register') ?>"><?php echo $this->translate('Register') ?></a></li>
 <?php } else { ?>
                         <li><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Overview') ?></a></li>
@@ -50,7 +50,7 @@
                         <li><a href="<?php echo $this->url('contacts') ?>"><?php echo $this->translate('Contacts') ?></a></li>
                         <li><a href="<?php echo $this->url('calendar') ?>"><?php echo $this->translate('Calendar') ?></a></li>
                         <li><a href="<?php echo $this->url('zfcuser') ?>" class="gravatar profile-photo"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail()) ?></a></li>
-                        <li><a href="<?php echo $this->url('zfcuser/logout') ?>"><?php echo $this->translate('Log out') ?></a></li>
+                        <li><a href="<?php echo $this->url('zfcuser/logout') ?>"><?php echo $this->translate('Sign out') ?></a></li>
 <?php } ?>
                     </ul>
                 </div><!--/.nav-collapse -->
