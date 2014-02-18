@@ -3,6 +3,20 @@ $title = 'My calendar';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('calendar', array('action'=>'add'));?>">Add new event</a>
+</p>
+<table class="table">
+<tr>
+    <th>Created At</th>
+</tr>
+<?php foreach ($this->records/*paginator*/ as $record) : ?>
+    <tr>
+        <td><?php echo $this->escapeHtml($record->created_at);?></td>
+    </tr>
+<?php endforeach; ?>
+</table>
+
 <?php
 $calendar = new \BmCalendar\Calendar();
 $year = $this->year;

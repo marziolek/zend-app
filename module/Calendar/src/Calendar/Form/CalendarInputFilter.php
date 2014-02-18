@@ -1,15 +1,15 @@
 <?php
 
-namespace Notes\Form;
+namespace Calendar\Form;
 
 use Zend\InputFilter\InputFilter;
 
-class NotesInputFilter extends InputFilter
+class CalendarInputFilter extends InputFilter
 {
     public function __construct()
     {
         $this->add(array(
-            'name' => 'note_title',
+            'name' => 'event_title',
             'required' => true,
             'filters' => array(
                 array('name' => 'StringTrim'),
@@ -27,7 +27,7 @@ class NotesInputFilter extends InputFilter
         )); 
 
         $this->add(array(
-            'name' => 'note_body',
+            'name' => 'event_body',
             'required' => false,
             'filters' => array(
                 array('name' => 'StringTrim'),
@@ -38,7 +38,7 @@ class NotesInputFilter extends InputFilter
                     'options' => array(
                         'encoding' => 'UTF-8',
                         'min'      => 2,
-                        'max'      => 1000,
+                        'max'      => 200,
                     ),
                 ),
             ),

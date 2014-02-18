@@ -34,20 +34,33 @@ class IndexController extends AbstractActionController
     }
     else 
     {
+      $user_id = $this->userId();
+      $records = $this->getCalendarTable()->fetchAll($user_id);
+      /*$paginator = $this->getCalendarTable()->fetchAll(true,$user_id);
+      $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+      $paginator->setItemCountPerPage(5);*/
 
       $name = (string) $this->params()->fromRoute('name', '');
       $year = date('Y');
       $current_month = date('n');
-
+      
       return new ViewModel(
         array(
           'name' => $name,
           'year' => $year,
           'month' => $current_month,
+          'records' => $records,
+          //'paginator' => $paginator,
         )
       );
     }
   }
+  
+  public function markEvents() 
+  {
+    
+  }
+
   public function userId()
   {
     if ($this->zfcUserAuthentication()->hasIdentity())
@@ -143,4 +156,3 @@ class IndexController extends AbstractActionController
   }
 
 }
-

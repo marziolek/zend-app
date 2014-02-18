@@ -1,6 +1,6 @@
 <?php
 
-namespace Notes\Model;
+namespace Calendar\Model;
 
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
@@ -8,7 +8,7 @@ use Zend\Db\Sql\Select;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Paginator\Paginator;
 
-class NotesTable
+class CalendarTable
 {
     protected $tableGateway;
 
@@ -17,14 +17,14 @@ class NotesTable
         $this->tableGateway = $tableGateway;
     }
     
-    public function fetchAll($paginated = false, $user_id)
+    public function fetchAll(/*$paginated = false,*/ $user_id)
     {  
-        if ($paginated) {
-            $asd = new Select('notes');
+       /* if ($paginated) {
+            $asd = new Select('calendar');
             $select = $asd->where(array('user_id' => $user_id));
-            //$select = new Select('notes');
+            //$select = new Select('calendar');
             $resultSetPrototype = new ResultSet();
-            $resultSetPrototype->setArrayObjectPrototype(new Notes());
+            $resultSetPrototype->setArrayObjectPrototype(new Calendar());
             $paginatorAdapter = new DbSelect(
                 $select,
                 $this->tableGateway->getAdapter(),
@@ -32,16 +32,16 @@ class NotesTable
             );
             $paginator = new Paginator($paginatorAdapter);
             return $paginator;
-        }
+       }*/
 
-        $resultSet = $this->tableGateway->select()->where(array('user_id' => $user_id));
+        $resultSet = $this->tableGateway->select((array('user_id' => $user_id)));
         return $resultSet;
     }
 
-    public function getNotes($id, $user_id)
+    public function getCalendar($id, $user_id)
     {
         $id  = (int) $id;
-        $rowset = $this->tableGateway->select(array('note_id' => $id,'user_id' => $user_id));
+        $rowset = $this->tableGateway->select(array('event_id' => $id,'user_id' => $user_id));
         $row = $rowset->current();
         if (!$row) {
             throw new \Exception("Could not find row $id");
@@ -49,28 +49,28 @@ class NotesTable
         return $row;
     }
 
-    public function saveNotes(Notes $notes,$user_id)
+    public function saveCalendar(Calendar $calendar,$user_id)
     {
          $data = array(
-            'note_title' => $notes->note_title,
-            'note_body'  => $notes->note_body,
-            'created_at'  => $notes->created_at,
-            'user_id' => $notes->user_id,
+            'event_title' => $calendar->event_title,
+            'event_body'  => $calendar->event_body,
+            'created_at'  => $calendar->created_at,
+            'user_id' => $calendar->user_id,
          );
 
-         $id = (int) $notes->note_id;
+         $id = (int) $calendar->event_id;
          if ($id == 0) {
              $this->tableGateway->insert($data);
          } else {
-             if ($this->getNotes($id,$user_id)) {
-                 $this->tableGateway->update($data, array('note_id' => $id,'user_id' => $user_id));
+             if ($this->getCalendar($id,$user_id)) {
+                 $this->tableGateway->update($data, array('event_id' => $id,'user_id' => $user_id));
              } else {
-                 throw new \Exception('Notes id does not exist');
+                 throw new \Exception('Calendar id does not exist');
              }
          }
     }
-    public function deleteNotes($id)
+    public function deleteCalendar($id)
     {
-        $this->tableGateway->delete(array('note_id' => $id));
+        $this->tableGateway->delete(array('event_id' => $id));
     }
 }

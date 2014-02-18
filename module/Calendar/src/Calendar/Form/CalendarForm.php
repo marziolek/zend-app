@@ -22,7 +22,7 @@ class CalendarForm extends Form
             'name' => 'event_title',
             'type' => 'text',
             'options' => array(
-                'label' => 'Note title',
+                'label' => 'Event title',
             ),
             'attributes' => array(
               'id' => 'event_title',
@@ -33,7 +33,7 @@ class CalendarForm extends Form
             'name' => 'event_body',
             'type' => 'text',
             'options' => array(
-                'label' => 'Note body',
+                'label' => 'Event body',
             ),
             'attributes' => array(
                 'id' => 'event_body',
