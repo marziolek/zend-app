@@ -13,7 +13,7 @@ return array(
           'route'    => '/calendar[/][:action][/:name]',
           'constraints' => array(
             'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-            'name'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+            'id'     => '[0-9]+',
           ),
           'defaults' => array(
             'controller' => 'Calendar\Controller\Index',

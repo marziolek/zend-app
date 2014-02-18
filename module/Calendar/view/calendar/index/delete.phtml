@@ -1,0 +1,34 @@
+<?php
+$title = 'Event#delete';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<p>Are you sure that you want to delete:</p>
+<table class="table">
+<tr>
+    <th>Note ID</th>
+    <th>Title</th>
+    <th>Body</th>
+    <th>Created At</th>
+</tr>
+    <tr>
+        <td><?php echo $this->escapeHtml($calendar->event_id);?></td>
+        <td><?php echo $this->escapeHtml($calendar->event_title);?></td>
+        <td><?php echo $this->escapeHtml($calendar->event_body);?></td>
+        <td><?php echo $this->escapeHtml($calendar->created_at);?></td>
+    </tr>
+</table>
+<?php
+$url = $this->url('calendar', array(
+    'action' => 'delete',
+    'id'     => $this->id,
+));
+?>
+<form action="<?php echo $url; ?>" method="post">
+<div>
+    <input type="hidden" name="id" value="<?php echo (int) $calendar->event_id; ?>" />
+    <input type="submit" name="del" value="Yes" />
+    <input type="submit" name="del" value="No" />
+</div>
+</form>

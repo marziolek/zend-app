@@ -1,0 +1,16 @@
+<?php
+    $title = 'Event#edit';
+    $this->headTitle($title);
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+    $form->setAttribute('action', $this->url(
+    'calendar',
+    array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    )
+));
+    echo $this->renderForm($form);

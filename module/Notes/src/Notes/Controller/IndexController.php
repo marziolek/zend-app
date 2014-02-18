@@ -31,7 +31,7 @@ class IndexController extends AbstractActionController
     }
     else 
     {
-      $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
+      $user_id = $this->userId();
       $paginator = $this->getNotesTable()->fetchAll(true,$user_id);
       $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
       $paginator->setItemCountPerPage(5);
