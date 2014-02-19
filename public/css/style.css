@@ -70,15 +70,20 @@ a.profile-photo:hover img {
 }
 .calendar li {
   float: left;
-  height: 260px;
+  height: 75px;
+  width: 75px;
+  margin: 1px;
 }
-.calendar li > table {
-  margin: 0 auto;
-}
-.calendar tbody th,
-.calendar tbody td {
-  width: 42px;
+.calendar li .day {
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 75px;
+  background-color: #eee;
   text-align: center;
+}
+.calendar li .day.event-set {
+  background-color: red;
 }
 h1 {
   text-align: right;

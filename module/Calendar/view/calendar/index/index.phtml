@@ -10,25 +10,28 @@ $this->headTitle($title);
 <tr>
     <th>Created At</th>
 </tr>
-<?php foreach ($this->records/*paginator*/ as $record) : ?>
-    <tr>
-        <td><?php echo $this->escapeHtml($record->created_at);?></td>
-    </tr>
-<?php endforeach; ?>
 </table>
-
 <?php
-$calendar = new \BmCalendar\Calendar();
-$year = $this->year;
-$month = $this->month;
-?>
-<h2>2014</h2>
+$dates = array();
+foreach ($this->records as $record) 
+{
+  $dateTime = new DateTime($record->created_at);
+  $date = $dateTime->format('n j'); 
+  array_push($dates,$date);
+} 
+?> 
 <ul class="calendar clearfix">
-<?php
-  for ($month; $month<13; $month++)
-  { 
-    $calendar_month = $this->calendar($calendar)->showMonth($year,$month);
-    echo '<li class="col-xs-4">'.$calendar_month.'</li>';
-  }
+<?php foreach ($this->calendar as $day) : ?>
+    <li>
+<?php     if (in_array($day, $dates)) 
+          {
+            $a = '<a class="day event-set" href="'. $this->url('calendar', array('action'=>'edit')).'">'. $day  .'</a>';
+            echo $a;
+          } else { 
+            $a = '<a class="day event-not-set" href="'. $this->url('calendar', array('action'=>'add')).'">'. $day .'</a>';
+            echo $a;
+          }
 ?>
+    </li>
+<?php endforeach; ?>
 </ul>
