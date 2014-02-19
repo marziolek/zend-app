@@ -124,10 +124,10 @@ class IndexController extends AbstractActionController
       $form->setInputFilter(new calendarInputFilter());
       $form->setData($request->getPost());
       if ($form->isValid()) {
-        //$this->getCalendarTable()->saveCalendar($form->getData(),$user_id);
-        $calendar->exchangeArray($form->getData());
-        $this->getCalendarTable()->saveCalendar($calendar,$user_id);
-        return $this->redirect()->toRoute('calendar');
+        $this->getCalendarTable()->saveCalendar($form->getData(),$user_id);
+        //$calendar->exchangeArray($form->getData());
+        //$this->getCalendarTable()->saveCalendar($calendar,$user_id);
+        //return $this->redirect()->toRoute('calendar');
       }
     }
     return new ViewModel(array(

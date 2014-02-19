@@ -63,7 +63,7 @@ class CalendarTable
          if ($id == 0) {
              $this->tableGateway->insert($data);
          } else {
-             if ($this->getCalendar($id,$user_id)) {
+             if ($this->getCalendar($data['created_at'],$user_id)) {
                  $this->tableGateway->update($data, array('user_id' => $user_id));
              } else {
                  throw new \Exception('Calendar id does not exist');
