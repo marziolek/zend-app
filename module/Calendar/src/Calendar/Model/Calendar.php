@@ -14,7 +14,7 @@ class Calendar
     public function exchangeArray($data)
     {
         $this->event_id = isset($data['event_id'])?$data['event_id']:null;
-        $this->created_at = isset($data['created_at'])?$data['created_at']:date('Y-m-d H:i:s');
+        $this->created_at = isset($data['created_at'])?$data['created_at']:date('Y-m-d');
         $this->event_title = isset($data['event_title'])?$data['event_title']:null;
         $this->event_body = isset($data['event_body'])?$data['event_body']:null;
         $this->user_id = isset($data['user_id'])?$data['user_id']:null;

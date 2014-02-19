@@ -19,6 +19,14 @@ class CalendarForm extends Form
         ));
 
         $this->add(array(
+            'name' => 'created_at',
+            'type' => 'hidden',
+            'attributes' => array(
+                'id' => 'created_at',
+            ),
+        ));
+
+        $this->add(array(
             'name' => 'event_title',
             'type' => 'text',
             'options' => array(

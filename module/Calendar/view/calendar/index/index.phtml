@@ -3,32 +3,31 @@ $title = 'My calendar';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
-<p>
-    <a href="<?php echo $this->url('calendar', array('action'=>'add'));?>">Add new event</a>
-</p>
-<table class="table">
-<tr>
-    <th>Created At</th>
-</tr>
-</table>
 <?php
 $dates = array();
 foreach ($this->records as $record) 
 {
   $dateTime = new DateTime($record->created_at);
-  $date = $dateTime->format('n j'); 
+  $date = $dateTime->format('Y-m-d'); 
   array_push($dates,$date);
 } 
 ?> 
 <ul class="calendar clearfix">
 <?php foreach ($this->calendar as $day) : ?>
     <li>
-<?php     if (in_array($day, $dates)) 
+<?php     
+$fullDay = $day[0].' '.$day[1];
+$fullDayDash = $day[2].'-'.$day[1].'-'.$day[0];
+$fullDayDashTime = new DateTime($fullDayDash);
+$name = $fullDayDashTime->format('Y-m-d');
+//echo $dates[0].' '.$iii;
+//$asd = $fu;
+          if (in_array($name, $dates)) 
           {
-            $a = '<a class="day event-set" href="'. $this->url('calendar', array('action'=>'edit')).'">'. $day  .'</a>';
+            $a = '<a class="day event-set" href="'. $this->url('calendar', array('action'=>'edit', 'date' => $name)).'">'. $fullDay  .'</a>';
             echo $a;
           } else { 
-            $a = '<a class="day event-not-set" href="'. $this->url('calendar', array('action'=>'add')).'">'. $day .'</a>';
+            $a = '<a class="day event-not-set" href="'. $this->url('calendar', array('action'=>'add', 'date' => $name)).'">'. $fullDay .'</a>';
             echo $a;
           }
 ?>

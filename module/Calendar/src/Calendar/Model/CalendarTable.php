@@ -39,14 +39,13 @@ class CalendarTable
         return $resultSet;
     }
 
-    public function getCalendar($id, $user_id)
+    public function getCalendar($date, $user_id)
     {
-        $id  = (int) $id;
-        $rowset = $this->tableGateway->select(array('event_id' => $id,'user_id' => $user_id));
+        $rowset = $this->tableGateway->select(array('created_at' => $date,'user_id' => $user_id));
     
         $row = $rowset->current();
         if (!$row) {
-            throw new \Exception("Could not find row $id");
+            throw new \Exception("Could not find row $date");
         }
         return $row;
     }
@@ -65,14 +64,14 @@ class CalendarTable
              $this->tableGateway->insert($data);
          } else {
              if ($this->getCalendar($id,$user_id)) {
-                 $this->tableGateway->update($data, array('event_id' => $id,'user_id' => $user_id));
+                 $this->tableGateway->update($data, array('user_id' => $user_id));
              } else {
                  throw new \Exception('Calendar id does not exist');
              }
          }
     }
-    public function deleteCalendar($id)
+/*    public function deleteCalendar($date)
     {
         $this->tableGateway->delete(array('event_id' => $id));
-    }
+    }*/
 }

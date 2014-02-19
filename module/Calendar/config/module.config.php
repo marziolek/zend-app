@@ -10,10 +10,10 @@ return array(
       'calendar' => array(
         'type'    => 'segment',
         'options' => array(
-          'route'    => '/calendar[/][:action][/:name]',
+          'route'    => '/calendar[/][:action][/:date]',
           'constraints' => array(
             'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-            'id'     => '[0-9]+',
+            'date'     => '[0-9-]*',
           ),
           'defaults' => array(
             'controller' => 'Calendar\Controller\Index',

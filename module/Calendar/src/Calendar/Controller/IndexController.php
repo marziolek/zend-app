@@ -7,10 +7,6 @@ use Zend\View\Model\ViewModel;
 use Calendar\Form\CalendarForm;
 use Calendar\Form\CalendarInputFilter;
 use Calendar\Model\Calendar;
-use BmCalendar\Renderer\HtmlCalendar;
-use BmCalendar\DayProviderInterface; 
-use BmCalendar\Day; 
-use BmCalendar\Month;
 
 class IndexController extends AbstractActionController
 {
@@ -39,7 +35,6 @@ class IndexController extends AbstractActionController
       /*$paginator = $this->getCalendarTable()->fetchAll(true,$user_id);
       $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
       $paginator->setItemCountPerPage(5);*/
-
       $name = (string) $this->params()->fromRoute('name', '');
       $today = date('Y-m-j');
 
@@ -48,8 +43,11 @@ class IndexController extends AbstractActionController
       $calendar = array();
       while($tenDaysBack <= $endTime)
       {
-        $thisDate = date('n j', $tenDaysBack);
-        array_push($calendar, $thisDate);
+        $thisDate = date('Y-m-d', $tenDaysBack);
+        $thisDay = date('d', $tenDaysBack);
+        $thisMonth = date('M', $tenDaysBack);
+        $thisYear = date('Y', $tenDaysBack);
+        array_push($calendar, array($thisDay,$thisMonth,$thisYear));
 
         $tenDaysBack = strtotime('+1 day', $tenDaysBack); // increment for loop
       }
@@ -65,11 +63,6 @@ class IndexController extends AbstractActionController
     }
   }
 
-  public function markEvents() 
-  {
-    
-  }
-
   public function userId()
   {
     if ($this->zfcUserAuthentication()->hasIdentity())
@@ -81,35 +74,12 @@ class IndexController extends AbstractActionController
 
   public function addAction()
   {
-    $user_id = $this->userId();
-    $form = new CalendarForm();
-    $form->get('user_id')->setValue($user_id);
-    $form->get('submit')->setValue('Add');
-
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      $calendar = new Calendar();
-      $form->setInputFilter(new calendarInputFilter());
-      $form->setData($request->getPost());
-      if ($form->isValid()) {
-        $calendar->exchangeArray($form->getData());
-        $this->getCalendarTable()->saveCalendar($calendar,$user_id);
-        return $this->redirect()->toRoute('calendar');
-      }
-    }
-    return new ViewModel(array('form' => $form));
-  }
-
-  public function editAction()
-  {
-    $id = (int) $this->params()->fromRoute('id', 0);
-    if (!$id) {
-      return $this->redirect()->toRoute('calendar', array(
-        'action' => 'add'
-      ));
+/*$date = $this->params()->fromRoute('date',0);
+    if (!$date) {
+      return $this->redirect()->toRoute('calendar');
     }
     $user_id = $this->userId();
-    $calendar = $this->getCalendarTable()->getCalendar($id,$user_id);
+    $calendar = $this->getCalendarTable()->getCalendar($date,$user_id);
 
     $form = new CalendarForm();
     $form->bind($calendar);
@@ -124,7 +94,7 @@ class IndexController extends AbstractActionController
         $this->getCalendarTable()->saveCalendar($form->getData(),$user_id);
       } else {
         return new ViewModel(array(
-          'id' => $id,
+          'name' => $date,
           'form' => $form,
         ));
       }
@@ -133,12 +103,76 @@ class IndexController extends AbstractActionController
     }
 
     return new ViewModel(array(
-      'id' => $id,
+      'date' => $date,
+      'form' => $form,
+    ));*/
+    //////////////////////////////////////
+    $user_id = $this->userId();
+    $form = new CalendarForm();
+    $form->get('user_id')->setValue($user_id);
+    $date = $this->params()->fromRoute('date');
+    var_dump($date);
+    if (!$date) {
+      return $this->redirect()->toRoute('calendar');
+    }
+    $form->get('created_at')->setValue($date);
+    $form->get('submit')->setValue('Add');
+
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      $calendar = new Calendar();
+      $form->setInputFilter(new calendarInputFilter());
+      $form->setData($request->getPost());
+      if ($form->isValid()) {
+        $this->getCalendarTable()->saveCalendar($form->getData(),$user_id);
+        //$calendar->exchangeArray($form->getData());
+        //$this->getCalendarTable()->saveCalendar($calendar,$user_id);
+        //return $this->redirect()->toRoute('calendar');
+      }
+    }
+    return new ViewModel(array(
+      'date' => $date,
       'form' => $form,
     ));
   }
 
-  public function deleteAction()
+  public function editAction()
+  {
+    $date = $this->params()->fromRoute('date',0);
+    if (!$date) {
+      return $this->redirect()->toRoute('calendar');
+    }
+    $user_id = $this->userId();
+    $calendar = $this->getCalendarTable()->getCalendar($date,$user_id);
+
+    $form = new CalendarForm();
+    $form->bind($calendar);
+    $form->get('submit')->setValue('Update');
+
+    $request = $this->getRequest();
+    if ($request->isPost()) {
+      $form->setInputFilter(new calendarInputFilter());
+      $form->setData($request->getPost());
+
+      if ($form->isValid()) {
+        $this->getCalendarTable()->saveCalendar($form->getData(),$user_id);
+      } else {
+        return new ViewModel(array(
+          'date' => $date,
+          'form' => $form,
+        ));
+      }
+
+      return $this->redirect()->toRoute('calendar');
+    }
+
+    return new ViewModel(array(
+      'date' => $date,
+      'form' => $form,
+    ));
+  }
+
+/*  public function deleteAction()
   {
     $id = (int) $this->params()->fromRoute('id', 0);
     if (!$id) {
@@ -163,5 +197,5 @@ class IndexController extends AbstractActionController
       'calendar' => $this->getCalendarTable()->getCalendar($id,$user_id)
     ));
   }
-
+ */
 }
