@@ -35,7 +35,7 @@ INSERT INTO `contacts` (`contact_id`, `created_at`, `contact_name`, `contact_sur
 (1, '2013-11-04 00:00:00', 'Iza', 'Prokopek', 'Piotrkowska 17/19', 'Lodz', '90-406', 'Polska', 'Moja dziewczyna z Tarnowa, ale mieszka w Lodzi.', '600-300-200', '', '', 'iza@prokopek.pl', '', '', 2)
 CREATE TABLE IF NOT EXISTS `calendar` ( 
   `event_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `created_at` datetime NOT NULL,
+  `created_at` date NOT NULL,
   `event_title` varchar(80) NOT NULL,
   `event_body` text NOT NULL,
   `user_id` int,
@@ -43,4 +43,4 @@ CREATE TABLE IF NOT EXISTS `calendar` (
   FOREIGN KEY (`user_id`) REFERENCES user(`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 INSERT INTO `calendar` (`event_id`, `created_at`, `event_title`, `event_body`, `user_id`) VALUES
-(1, '2014-02-18 00:00:00', 'First event', 'Lorem ipsum dolor sit amet, consececenas tincidunt, tellus vel imperdiet.', 2),
+(1, '2014-02-18 00:00:00', 'First event', 'Lorem ipsum dolor sit amet, consececenas tincidunt, tellus vel imperdiet.', 2)

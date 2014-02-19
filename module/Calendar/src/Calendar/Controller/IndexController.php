@@ -35,9 +35,9 @@ class IndexController extends AbstractActionController
       /*$paginator = $this->getCalendarTable()->fetchAll(true,$user_id);
       $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
       $paginator->setItemCountPerPage(5);*/
-      $name = (string) $this->params()->fromRoute('name', '');
       $today = date('Y-m-j');
 
+      $months = (string) $this->params()->fromRoute('months', 'o');
       $tenDaysBack = strtotime('-1 month');
       $endTime = strtotime('+1 month');
       $calendar = array();
@@ -54,7 +54,7 @@ class IndexController extends AbstractActionController
 
       return new ViewModel(
         array(
-          'name' => $name,
+          'months' => $months,
           'calendar' => $calendar,
           'records' => $records,
           //'paginator' => $paginator,
@@ -74,44 +74,10 @@ class IndexController extends AbstractActionController
 
   public function addAction()
   {
-/*$date = $this->params()->fromRoute('date',0);
-    if (!$date) {
-      return $this->redirect()->toRoute('calendar');
-    }
-    $user_id = $this->userId();
-    $calendar = $this->getCalendarTable()->getCalendar($date,$user_id);
-
-    $form = new CalendarForm();
-    $form->bind($calendar);
-    $form->get('submit')->setValue('Update');
-
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      $form->setInputFilter(new calendarInputFilter());
-      $form->setData($request->getPost());
-
-      if ($form->isValid()) {
-        $this->getCalendarTable()->saveCalendar($form->getData(),$user_id);
-      } else {
-        return new ViewModel(array(
-          'name' => $date,
-          'form' => $form,
-        ));
-      }
-
-      return $this->redirect()->toRoute('calendar');
-    }
-
-    return new ViewModel(array(
-      'date' => $date,
-      'form' => $form,
-    ));*/
-    //////////////////////////////////////
     $user_id = $this->userId();
     $form = new CalendarForm();
     $form->get('user_id')->setValue($user_id);
     $date = $this->params()->fromRoute('date');
-    var_dump($date);
     if (!$date) {
       return $this->redirect()->toRoute('calendar');
     }
@@ -124,7 +90,6 @@ class IndexController extends AbstractActionController
       $form->setInputFilter(new calendarInputFilter());
       $form->setData($request->getPost());
       if ($form->isValid()) {
-        //$this->getCalendarTable()->saveCalendar($form->getData(),$user_id);
         $calendar->exchangeArray($form->getData());
         $this->getCalendarTable()->saveCalendar($calendar,$user_id);
         return $this->redirect()->toRoute('calendar');
