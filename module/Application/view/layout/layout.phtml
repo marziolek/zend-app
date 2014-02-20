@@ -45,7 +45,11 @@
                         <li><a href="<?php echo $this->url('zfcuser/login') ?>"><?php echo $this->translate('Sign in') ?></a></li>
                         <li><a href="<?php echo $this->url('zfcuser/register') ?>"><?php echo $this->translate('Register') ?></a></li>
 <?php } else { ?>
-                        <li><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Overview') ?></a></li>
+<?php if ($this->zfcUserIdentity()->getId() == 2) { 
+?>
+                        <li><a href="<?php echo $this->url('admin') ?>"><?php echo $this->translate('Admin Panel') ?></a></li>
+<?php } ?>
+                       <!-- <li><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Overview') ?></a></li>-->
                         <li><a href="<?php echo $this->url('notes') ?>"><?php echo $this->translate('Notes') ?></a></li>
                         <li><a href="<?php echo $this->url('contacts') ?>"><?php echo $this->translate('Contacts') ?></a></li>
                         <li><a href="<?php echo $this->url('calendar') ?>"><?php echo $this->translate('Calendar') ?></a></li>

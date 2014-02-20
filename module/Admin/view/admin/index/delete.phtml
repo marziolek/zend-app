@@ -1,0 +1,35 @@
+<?php
+// Find me in /module/Notes/view/notes/delete.phtml
+
+$title = 'Note#delete';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<p>Are you sure that you want to delete:</p>
+<table class="table">
+<tr>
+    <th>Id</th>
+    <th>Email</th>
+    <th>Display name</th>
+    <th>&nbsp;</th>
+</tr>
+    <tr>
+        <td><?php echo $this->escapeHtml($admin->user_id);?></td>
+        <td><?php echo $this->escapeHtml($admin->email);?></td>
+        <td><?php echo $this->escapeHtml($admin->display_name);?></td>
+    </tr>
+</table>
+<?php
+$url = $this->url('admin', array(
+    'action' => 'delete',
+    'id'     => $this->user_id,
+));
+?>
+<form action="<?php echo $url; ?>" method="post">
+<div>
+    <input type="hidden" name="user_id" value="<?php echo (int) $admin->user_id; ?>" />
+    <input type="submit" name="del" value="Yes" />
+    <input type="submit" name="del" value="No" />
+</div>
+</form>

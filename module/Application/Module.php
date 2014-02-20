@@ -57,23 +57,27 @@ class Module
 
     public function checkAcl(MvcEvent $e) {
       $route = $e->getRouteMatch()->getMatchedRouteName();
+      
+      $userRole = 'guest'; 
       //you set your role
-      $userRole = 'user';
-      $adminRole = 'admin';
-
+      $sm = $e->getApplication()->getServiceManager();
+      $auth = $sm->get('zfcuser_auth_service');
+      if ($auth->hasIdentity()) {
+        $id=$auth->getIdentity()->getId();
+        if ($id == 2) 
+        {
+          $userRole = 'admin';
+        } elseif ($id != 2)
+        { 
+          $userRole = 'user';
+        } else {
+          $userRole = 'guest';
+        } 
+      }
       if (!$e->getViewModel()->acl->isAllowed($userRole, $route)) {
         $response = $e->getResponse();
-        //location to page or what ever
         $response->getHeaders()->addHeaderLine('Location', $e->getRequest()->getBaseUrl() . '/404');
         $response->setStatusCode(404);
-
-      }
-      if (!$e->getViewModel()->acl->isAllowed($adminRole, $route)) {
-        $response = $e->getResponse();
-        //location to page or what ever
-        $response->getHeaders()->addHeaderLine('Location', $e->getRequest()->getBaseUrl() . '/404');
-        $response->setStatusCode(404);
-
       }
     }
 
