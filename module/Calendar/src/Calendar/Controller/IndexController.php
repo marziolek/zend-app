@@ -32,28 +32,24 @@ class IndexController extends AbstractActionController
     {
       $user_id = $this->userId();
       $records = $this->getCalendarTable()->fetchAll($user_id);
-      /*$paginator = $this->getCalendarTable()->fetchAll(true,$user_id);
-      $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-      $paginator->setItemCountPerPage(5);*/
       $today = date('Y-m-j');
+      $months =  $this->params()->fromRoute('date',0);
+          
+        preg_match('/(\d*).(\d*)/', $months, $matches);
 
-      $monthsBackward = 0;
-      $monthsForward = 0;
-      if ((int) $this->params()->fromQuery('b'))
-      {
-        $monthsBackward = (int) $this->params()->fromQuery('b');
-        $monthsBackward++;
-      } elseif ((int) $this->params()->fromQuery('f'))
-      {
-        $monthsForward = (int) $this->params()->fromQuery('f');
-        $monthsForward++;
-      }
+      $monthsBackward = $matches[1];
+      $monthsForward= $matches[2];
+      
+      $back=$monthsBackward+1;
+      $BF=$back.'-'.$monthsForward;
+
+      $forw=$monthsForward+1;
+      $FB=$monthsBackward.'-'.$forw;
+
         $backward = -1-$monthsBackward.' months';
         $forward = 1+$monthsForward.' months';
         $tenDaysBack = strtotime($backward);
         $endTime = strtotime($forward);
-       var_dump($backward); 
-       var_dump($forward); 
       $calendar = array();
       while($tenDaysBack <= $endTime)
       {
@@ -68,14 +64,13 @@ class IndexController extends AbstractActionController
 
       return new ViewModel(
         array(
-          'back' => $monthsBackward,
-          'forward' => $monthsForward,
+          'backward' => $BF,
+          'forward' => $FB,
           'calendar' => $calendar,
           'records' => $records,
-          //'paginator' => $paginator,
         )
       );
-    }
+    } 
   }
 
   public function userId()
@@ -152,30 +147,55 @@ class IndexController extends AbstractActionController
     ));
   }
 
-/*  public function deleteAction()
+  public function monthsAction() 
   {
-    $id = (int) $this->params()->fromRoute('id', 0);
-    if (!$id) {
-      return $this->redirect()->toRoute('calendar');
+    if (!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
     }
+    else 
+    {
+      $user_id = $this->userId();
+      $records = $this->getCalendarTable()->fetchAll($user_id);
+      $today = date('Y-m-j');
+      $months =  $this->params()->fromRoute('date',0);
+          
+        preg_match('/(\d*).(\d*)/', $months, $matches);
 
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      $delete = $request->getPost('del', 'No');
+      $monthsBackward = $matches[1];
+      $monthsForward= $matches[2];
+      
+      $back=$monthsBackward+1;
+      $BF=$back.'-'.$monthsForward;
 
-      if ($delete == 'Yes') {
-        $id = (int) $request->getPost('id');
-        $this->getCalendarTable()->deleteCalendar($id);
+      $forw=$monthsForward+1;
+      $FB=$monthsBackward.'-'.$forw;
+
+        $backward = -1-$monthsBackward.' months';
+        $forward = 1+$monthsForward.' months';
+        $tenDaysBack = strtotime($backward);
+        $endTime = strtotime($forward);
+      $calendar = array();
+      while($tenDaysBack <= $endTime)
+      {
+        $thisDate = date('Y-m-d', $tenDaysBack);
+        $thisDay = date('d', $tenDaysBack);
+        $thisMonth = date('M', $tenDaysBack);
+        $thisYear = date('Y', $tenDaysBack);
+        array_push($calendar, array($thisDay,$thisMonth,$thisYear));
+
+        $tenDaysBack = strtotime('+1 day', $tenDaysBack); // increment for loop
       }
 
-      return $this->redirect()->toRoute('calendar');
-    }
-    $user_id = $this->userId();
-
-    return new ViewModel(array(
-      'id'    => $id,
-      'calendar' => $this->getCalendarTable()->getCalendar($id,$user_id)
-    ));
+      return new ViewModel(
+        array(
+          'backward' => $BF,
+          'forward' => $FB,
+          'calendar' => $calendar,
+          'records' => $records,
+        )
+      );
+    } 
+    
   }
- */
-}
+} 
