@@ -41,6 +41,17 @@ class ContactsForm extends Form
         ));
 
         $this->add(array(
+            'name' => 'contact_description',
+            'type' => 'text',
+            'options' => array(
+                'label' => 'Description',
+            ),
+            'attributes' => array(
+                'id' => 'contact_description',
+            ),
+        ));
+
+        $this->add(array(
             'name' => 'user_id',
             'type' => 'hidden',
             'attributes' => array(
