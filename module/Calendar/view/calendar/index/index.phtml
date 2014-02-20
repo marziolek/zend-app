@@ -10,9 +10,12 @@ foreach ($this->records as $record)
   $dateTime = new DateTime($record->created_at);
   $date = $dateTime->format('Y-m-d'); 
   array_push($dates,$date);
-} 
-?> 
+}
+$back = 1;
+$forward = 1;
+?>
 <ul class="calendar clearfix">
+  <li><a href='<?php echo $this->url('calendar', array('action'=>'index')).'?b='.$this->back.'&f='.$this->forward ?>'>Previous month</a></li>
 <?php foreach ($this->calendar as $day) : ?>
     <li>
 <?php     
@@ -20,8 +23,6 @@ $fullDay = $day[0].' '.$day[1];
 $fullDayDash = $day[2].'-'.$day[1].'-'.$day[0];
 $fullDayDashTime = new DateTime($fullDayDash);
 $name = $fullDayDashTime->format('Y-m-d');
-//echo $dates[0].' '.$iii;
-//$asd = $fu;
           if (in_array($name, $dates)) 
           {
             $a = '<a class="day event-set" href="'. $this->url('calendar', array('action'=>'edit', 'date' => $name)).'">'. $fullDay  .'</a>';
@@ -33,4 +34,5 @@ $name = $fullDayDashTime->format('Y-m-d');
 ?>
     </li>
 <?php endforeach; ?>
+  <li><a href='<?php echo $this->url('calendar', array('action'=>'index')).'?b='.$this->back.'&f='.$this->forward ?>'>Next month</a></li>
 </ul>

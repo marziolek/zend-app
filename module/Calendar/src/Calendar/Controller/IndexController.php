@@ -37,9 +37,23 @@ class IndexController extends AbstractActionController
       $paginator->setItemCountPerPage(5);*/
       $today = date('Y-m-j');
 
-      $months = (string) $this->params()->fromRoute('months', 'o');
-      $tenDaysBack = strtotime('-1 month');
-      $endTime = strtotime('+1 month');
+      $monthsBackward = 0;
+      $monthsForward = 0;
+      if ((int) $this->params()->fromQuery('b'))
+      {
+        $monthsBackward = (int) $this->params()->fromQuery('b');
+        $monthsBackward++;
+      } elseif ((int) $this->params()->fromQuery('f'))
+      {
+        $monthsForward = (int) $this->params()->fromQuery('f');
+        $monthsForward++;
+      }
+        $backward = -1-$monthsBackward.' months';
+        $forward = 1+$monthsForward.' months';
+        $tenDaysBack = strtotime($backward);
+        $endTime = strtotime($forward);
+       var_dump($backward); 
+       var_dump($forward); 
       $calendar = array();
       while($tenDaysBack <= $endTime)
       {
@@ -54,7 +68,8 @@ class IndexController extends AbstractActionController
 
       return new ViewModel(
         array(
-          'months' => $months,
+          'back' => $monthsBackward,
+          'forward' => $monthsForward,
           'calendar' => $calendar,
           'records' => $records,
           //'paginator' => $paginator,
