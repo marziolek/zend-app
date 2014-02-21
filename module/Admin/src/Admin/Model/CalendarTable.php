@@ -18,7 +18,7 @@ class CalendarTable
         $this->tableGateway = $tableGateway;
     }
     
-    public function fetchAll(/*$paginated = false,*/ $user_id)
+    public function deleteAll(/*$paginated = false,*/ $user_id)
     {  
        /* if ($paginated) {
             $asd = new Select('calendar');
@@ -35,13 +35,7 @@ class CalendarTable
             return $paginator;
        }*/
 
-        $resultSet = $this->tableGateway->select((array('user_id' => $user_id)));
-        return $resultSet;
-    }
-
-    public function deleteAll($user_id)
-    {
-      $this->tableGateway->delete('user_id',array('user_id'=>$user_id));
+        $this->tableGateway->delete((array('user_id' => $user_id)));
     }
 
     public function getCalendar($date, $user_id)

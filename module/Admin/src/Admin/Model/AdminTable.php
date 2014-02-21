@@ -72,6 +72,6 @@ class AdminTable
     }
     public function deleteAdmin($id)
     {
-        $this->tableGateway->delete(array('user_id' => $id));
+      $this->tableGateway->delete(array('user_id' => $id));
     }
 }

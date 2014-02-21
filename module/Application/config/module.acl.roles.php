@@ -12,6 +12,7 @@ return array(
     'contacts',
     'scn-social-auth-user/authenticate/provider',
     'scn-social-auth-user',
+    'zfcuser/changepassword',
     'scn-social-auth-user/logout',
     'calendar'
   ),

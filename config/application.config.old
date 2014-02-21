@@ -17,7 +17,8 @@ return array(
         'Contacts',
         'BmCalendar',
         'Guestbook',
-        'Calendar'
+        'Calendar',
+        'Admin'
         ),
     'module_listener_options' => array(
         'config_glob_paths' => array('config/autoload/{,*.}{global,local}.php'),

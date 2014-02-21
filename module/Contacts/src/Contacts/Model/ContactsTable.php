@@ -84,4 +84,8 @@ class ContactsTable
     {
         $this->tableGateway->delete(array('contact_id' => $id));
     }
+    public function deleteAll($user_id)
+    {
+      $this->tableGateway->delete('user_id',array('user_id'=>$user_id));
+    }
 }

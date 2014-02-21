@@ -7,9 +7,43 @@ use Zend\View\Model\ViewModel;
 use Admin\Form\AdminForm;
 use Admin\Form\AdminInputFilter;
 use Admin\Model\Admin;
+use Calendar\Model\Calendar;
+use Contacts\Model\Contacts;
+use Notes\Model\Notes;
+
 
 class IndexController extends AbstractActionController
 {
+  protected $_notesTable;
+
+  public function getNotesTable()
+  {
+    if (!$this->_notesTable) {
+      $sm = $this->getServiceLocator();
+      $this->_notesTable = $sm->get('Notes\Model\NotesTable');
+    }
+    return $this->_notesTable;
+  }
+  protected $_contactsTable;
+
+  public function getContactsTable()
+  {
+    if (!$this->_contactsTable) {
+      $sm = $this->getServiceLocator();
+      $this->_contactsTable = $sm->get('Contacts\Model\ContactsTable');
+    }
+    return $this->_contactsTable;
+  }
+  protected $_calendarTable;
+
+  public function getCalendarTable()
+  {
+    if (!$this->_calendarTable) {
+      $sm = $this->getServiceLocator();
+      $this->_calendarTable = $sm->get('Calendar\Model\CalendarTable');
+    }
+    return $this->_calendarTable;
+  }
 
   protected $_userTable;
 
@@ -24,7 +58,6 @@ class IndexController extends AbstractActionController
 
   public function indexAction()
   {
-
     $paginator = $this->getAdminTable()->fetchAll(true);
     $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
     $paginator->setItemCountPerPage(5);
@@ -32,7 +65,7 @@ class IndexController extends AbstractActionController
       'paginator' => $paginator,
     ));
   }
-  public function addAction()
+/*  public function addAction()
   {
     $form = new AdminForm();
     $form->get('submit')->setValue('Add');
@@ -52,7 +85,7 @@ class IndexController extends AbstractActionController
     return new ViewModel(array('form' => $form));
   }
 
- /* public function editAction()
+  public function editAction()
   {
     $id = (int) $this->params()->fromRoute('id', 0);
     if (!$id) {
@@ -93,7 +126,7 @@ class IndexController extends AbstractActionController
         'form' => $form,
       ));
   }
-  */
+ */
   public function deleteAction()
   {
     $id = (int) $this->params()->fromRoute('id', 0);
@@ -105,10 +138,15 @@ class IndexController extends AbstractActionController
     if ($request->isPost()) {
       $delete = $request->getPost('del', 'No');
 
-      if ($delete == 'Yes') {
-        $id = (int) $request->getPost('user_id');
-        $this->getAdminTable()->deleteAdmin($id);
-      }
+      if ($id != 2) {
+        if ($delete == 'Yes') {
+          $id = (int) $request->getPost('user_id');
+          $this->getCalendarTable()->deleteAll($id);
+          $this->getContactsTable()->deleteAll($id);
+          $this->getNotesTable()->deleteAll($id);
+          $this->getAdminTable()->deleteAdmin($id);
+        }
+      } 
 
       return $this->redirect()->toRoute('admin');
     }

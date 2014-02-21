@@ -1,0 +1,6 @@
+<div class="clearfix">
+<div class="gravatar"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail(), array('img_size' => 200)) ?></div>
+<h2 style="text-align: left;">Profile</h2>
+<h4><?php echo $this->zfcUserDisplayName() ?></h4>
+<a href="<?php echo $this->url('zfcuser/changepassword');?>">Change password</a>
+</div>
