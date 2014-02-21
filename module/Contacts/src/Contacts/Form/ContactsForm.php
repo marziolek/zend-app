@@ -52,6 +52,107 @@ class ContactsForm extends Form
         ));
 
         $this->add(array(
+            'name' => 'contact_email',
+            'type' => 'text',
+            'options' => array(
+                'label' => 'Email',
+            ),
+            'attributes' => array(
+                'id' => 'contact_email',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'contact_phone',
+            'type' => 'text',
+            'options' => array(
+                'label' => 'Phone',
+            ),
+            'attributes' => array(
+                'id' => 'contact_phone',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'contact_phone2',
+            'type' => 'text',
+            'options' => array(
+                'label' => 'Phone 2',
+            ),
+            'attributes' => array(
+                'id' => 'contact_phone2',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'contact_street',
+            'type' => 'text',
+            'options' => array(
+                'label' => 'Street',
+            ),
+            'attributes' => array(
+                'id' => 'contact_street',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'contact_city',
+            'type' => 'text',
+            'options' => array(
+                'label' => 'City',
+            ),
+            'attributes' => array(
+                'id' => 'contact_city',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'contact_postal_code',
+            'type' => 'text',
+            'options' => array(
+                'label' => 'Postal code',
+            ),
+            'attributes' => array(
+                'id' => 'contact_postal_code',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'contact_country',
+            'type' => 'text',
+            'options' => array(
+                'label' => 'Country',
+            ),
+            'attributes' => array(
+                'id' => 'contact_country',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'contact_facebook',
+            'type' => 'text',
+            'options' => array(
+                'label' => 'Facebook profile',
+            ),
+            'attributes' => array(
+                'id' => 'contact_facebook',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'contact_google',
+            'type' => 'text',
+            'options' => array(
+                'label' => 'Google profile',
+            ),
+            'attributes' => array(
+                'id' => 'contact_google',
+            ),
+        ));
+
+        
+
+        $this->add(array(
             'name' => 'user_id',
             'type' => 'hidden',
             'attributes' => array(

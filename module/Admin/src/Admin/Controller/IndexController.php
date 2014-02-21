@@ -65,68 +65,7 @@ class IndexController extends AbstractActionController
       'paginator' => $paginator,
     ));
   }
-/*  public function addAction()
-  {
-    $form = new AdminForm();
-    $form->get('submit')->setValue('Add');
-
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      $admin = new Admin();
-      $form->setInputFilter(new adminInputFilter());
-      $form->setData($request->getPost());
-        //var_dump($form);
-      if ($form->isValid()) {
-        $admin->exchangeArray($form->getData());
-        $this->getAdminTable()->saveAdmin($admin);
-        return $this->redirect()->toRoute('admin');
-      }
-    }
-    return new ViewModel(array('form' => $form));
-  }
-
-  public function editAction()
-  {
-    $id = (int) $this->params()->fromRoute('id', 0);
-    if (!$id) {
-      return $this->redirect()->toRoute('admin', array(
-        'action' => 'add'
-      ));
-    }
-    $admin = $this->getAdminTable()->getAdmin($id);
-    $form = new AdminForm();
-    $form->bind($admin);
-    $form->get('submit')->setValue('Update');
-
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      $form->setInputFilter(new adminInputFilter());
-      $form->setData($request->getPost());
-
-      if ($form->isValid()) {
-        $this->getAdminTable()->saveAdmin($form->getData());
-      } else {
-        var_dump($this->getAdminTable()->saveAdmin($form->getData()));
-        return new ViewModel(array(
-          'user_id' => $id,
-          'form' => $form,
-        ));
-      }
-
-      return $this->redirect()->toRoute('admin');
-
-      return new ViewModel(array(
-        'user_id' => $id,
-        'form' => $form,
-      ));
-    }
-
-      return new ViewModel(array(
-        'user_id' => $id,
-        'form' => $form,
-      ));
-  }
- */
+  
   public function deleteAction()
   {
     $id = (int) $this->params()->fromRoute('id', 0);

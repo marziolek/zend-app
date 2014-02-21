@@ -18,30 +18,15 @@ class CalendarTable
         $this->tableGateway = $tableGateway;
     }
     
-    public function fetchAll(/*$paginated = false,*/ $user_id)
+    public function fetchAll($user_id)
     {  
-       /* if ($paginated) {
-            $asd = new Select('calendar');
-            $select = $asd->where(array('user_id' => $user_id));
-            //$select = new Select('calendar');
-            $resultSetPrototype = new ResultSet();
-            $resultSetPrototype->setArrayObjectPrototype(new Calendar());
-            $paginatorAdapter = new DbSelect(
-                $select,
-                $this->tableGateway->getAdapter(),
-                $resultSetPrototype
-            );
-            $paginator = new Paginator($paginatorAdapter);
-            return $paginator;
-       }*/
-
         $resultSet = $this->tableGateway->select((array('user_id' => $user_id)));
         return $resultSet;
     }
 
     public function deleteAll($user_id)
     {
-      $this->tableGateway->delete('user_id',array('user_id'=>$user_id));
+      $this->tableGateway->delete(array('user_id'=>$user_id));
     }
 
     public function getCalendar($date, $user_id)
