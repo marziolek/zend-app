@@ -63,16 +63,21 @@ class Module
       $sm = $e->getApplication()->getServiceManager();
       $auth = $sm->get('zfcuser_auth_service');
       if ($auth->hasIdentity()) {
-        $id=$auth->getIdentity()->getId();
-        if ($id == 2) 
+        if ($auth->getIdentity()->getId()) 
         {
-          $userRole = 'admin';
-        } elseif ($id != 2)
-        { 
-          $userRole = 'user';
+          $id=$auth->getIdentity()->getId();
+          if ($id == 2) 
+          {
+            $userRole = 'admin';
+          } elseif ($id != 2)
+          { 
+            $userRole = 'user';
+          } else {
+            $userRole = 'guest';
+          } 
         } else {
           $userRole = 'guest';
-        } 
+        }
       }
       if (!$e->getViewModel()->acl->isAllowed($userRole, $route)) {
         $response = $e->getResponse();
