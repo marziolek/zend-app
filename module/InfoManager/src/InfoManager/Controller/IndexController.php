@@ -48,10 +48,7 @@ class IndexController extends AbstractActionController
     $name = (string) $this->params()->fromRoute('name', '');
 
 
-    if (!$this->zfcUserAuthentication()->hasIdentity())
-    {
       return $this->redirect()->toRoute('zfcuser');
-    }
 
     return new ViewModel(
       array(

@@ -4,7 +4,7 @@
 ?>
 
 <h1><?php echo $this->escapeHtml($title); ?></h1>
-
+<div class="form-control">
 <?php
     $form->setAttribute('action', $this->url(
     'notes',
@@ -14,3 +14,5 @@
     )
 ));
     echo $this->renderForm($form);
+?>
+</div>

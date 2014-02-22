@@ -31,7 +31,7 @@ class NotesForm extends Form
 
         $this->add(array(
             'name' => 'note_body',
-            'type' => 'text',
+            'type' => 'textarea',
             'options' => array(
                 'label' => 'Note body',
             ),

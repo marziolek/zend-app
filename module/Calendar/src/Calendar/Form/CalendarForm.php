@@ -39,7 +39,7 @@ class CalendarForm extends Form
 
         $this->add(array(
             'name' => 'event_body',
-            'type' => 'text',
+            'type' => 'textarea',
             'options' => array(
                 'label' => 'Event body',
             ),

@@ -41,100 +41,118 @@ class IndexController extends AbstractActionController
       ));
     }
   }
-  
+
   public function userId() 
   {
-     if ($this->zfcUserAuthentication()->hasIdentity())
-     {
-        $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
-     }
-     return $user_id;
+    if ($this->zfcUserAuthentication()->hasIdentity())
+    {
+      $user_id = $this->zfcUserAuthentication()->getIdentity()->getId();
+    }
+    return $user_id;
   }
 
   public function addAction()
   {
-    $user_id = $this->userId();
-    $form = new NotesForm();
-    $form->get('user_id')->setValue($user_id); 
-    $form->get('submit')->setValue('Add');
-
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      $notes = new Notes();
-      $form->setInputFilter(new notesInputFilter());
-      $form->setData($request->getPost());
-      if ($form->isValid()) {
-        $notes->exchangeArray($form->getData());
-        $this->getNotesTable()->saveNotes($notes,$user_id);
-        return $this->redirect()->toRoute('notes');
-      }
+    if (!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
     }
-    return new ViewModel(array('form' => $form));
-  }
+    else 
+    {
+      $user_id = $this->userId();
+      $form = new NotesForm();
+      $form->get('user_id')->setValue($user_id); 
+      $form->get('submit')->setValue('Add');
 
+      $request = $this->getRequest();
+      if ($request->isPost()) {
+        $notes = new Notes();
+        $form->setInputFilter(new notesInputFilter());
+        $form->setData($request->getPost());
+        if ($form->isValid()) {
+          $notes->exchangeArray($form->getData());
+          $this->getNotesTable()->saveNotes($notes,$user_id);
+          return $this->redirect()->toRoute('notes');
+        }
+      }
+      return new ViewModel(array('form' => $form));
+    }
+  }
   public function editAction()
   {
-    $id = (int) $this->params()->fromRoute('id', 0);
-    if (!$id) {
-      return $this->redirect()->toRoute('notes', array(
-        'action' => 'add'
-      ));
+    if (!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
     }
-    $user_id = $this->userId();
-    $notes = $this->getNotesTable()->getNotes($id,$user_id);
-
-    $form = new NotesForm();
-    $form->bind($notes);
-    $form->get('submit')->setValue('Update');
-
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      $form->setInputFilter(new notesInputFilter());
-      $form->setData($request->getPost());
-
-      if ($form->isValid()) {
-        $this->getNotesTable()->saveNotes($form->getData(),$user_id);
-      } else {
-        return new ViewModel(array(
-          'id' => $id,
-          'form' => $form,
+    else 
+    {
+      $id = (int) $this->params()->fromRoute('id', 0);
+      if (!$id) {
+        return $this->redirect()->toRoute('notes', array(
+          'action' => 'add'
         ));
       }
+      $user_id = $this->userId();
+      $notes = $this->getNotesTable()->getNotes($id,$user_id);
 
-      return $this->redirect()->toRoute('notes');
-    }
+      $form = new NotesForm();
+      $form->bind($notes);
+      $form->get('submit')->setValue('Update');
 
-    return new ViewModel(array(
-      'id' => $id,
-      'form' => $form,
-    ));
-  }
+      $request = $this->getRequest();
+      if ($request->isPost()) {
+        $form->setInputFilter(new notesInputFilter());
+        $form->setData($request->getPost());
 
-  public function deleteAction()
-  {
-    $id = (int) $this->params()->fromRoute('id', 0);
-    if (!$id) {
-      return $this->redirect()->toRoute('notes');
-    }
+        if ($form->isValid()) {
+          $this->getNotesTable()->saveNotes($form->getData(),$user_id);
+        } else {
+          return new ViewModel(array(
+            'id' => $id,
+            'form' => $form,
+          ));
+        }
 
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      $delete = $request->getPost('del', 'No');
-
-      if ($delete == 'Yes') {
-        $id = (int) $request->getPost('id');
-        $this->getNotesTable()->deleteNotes($id);
+        return $this->redirect()->toRoute('notes');
       }
 
-      return $this->redirect()->toRoute('notes');
+      return new ViewModel(array(
+        'id' => $id,
+        'form' => $form,
+      ));
     }
-    $user_id = $this->userId();
-
-    return new ViewModel(array(
-      'id'    => $id,
-      'notes' => $this->getNotesTable()->getNotes($id,$user_id)
-    ));
   }
+  public function deleteAction()
+  {
+    if (!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
+    else 
+    {
+      $id = (int) $this->params()->fromRoute('id', 0);
+      if (!$id) {
+        return $this->redirect()->toRoute('notes');
+      }
 
+      $request = $this->getRequest();
+      if ($request->isPost()) {
+        $delete = $request->getPost('del', 'No');
+
+        if ($delete == 'Yes') {
+          $id = (int) $request->getPost('id');
+          $this->getNotesTable()->deleteNotes($id);
+        }
+
+        return $this->redirect()->toRoute('notes');
+      }
+      $user_id = $this->userId();
+
+      return new ViewModel(array(
+        'id'    => $id,
+        'notes' => $this->getNotesTable()->getNotes($id,$user_id)
+      ));
+    }
+  }
 
 }

@@ -58,42 +58,70 @@ class IndexController extends AbstractActionController
 
   public function indexAction()
   {
-    $paginator = $this->getAdminTable()->fetchAll(true);
-    $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-    $paginator->setItemCountPerPage(5);
-    return new ViewModel(array(
-      'paginator' => $paginator,
-    ));
+    if ($this->zfcUserAuthentication()->hasIdentity()) 
+    {
+      if ($this->zfcUserAuthentication()->getIdentity()->getId() != 2)
+      {
+        return $this->redirect()->toRoute('zfcuser');
+      }
+      else 
+      {
+        $paginator = $this->getAdminTable()->fetchAll(true);
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        $paginator->setItemCountPerPage(5);
+        return new ViewModel(array(
+          'paginator' => $paginator,
+        ));
+      }
+    }
+    else 
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
   }
-  
+
   public function deleteAction()
   {
-    $id = (int) $this->params()->fromRoute('id', 0);
-    if (!$id) {
-      return $this->redirect()->toRoute('admin');
-    }
-
-    $request = $this->getRequest();
-    if ($request->isPost()) {
-      $delete = $request->getPost('del', 'No');
-
-      if ($id != 2) {
-        if ($delete == 'Yes') {
-          $id = (int) $request->getPost('user_id');
-          $this->getCalendarTable()->deleteAll($id);
-          $this->getContactsTable()->deleteAll($id);
-          $this->getNotesTable()->deleteAll($id);
-          $this->getAdminTable()->deleteAdmin($id);
+    if ($this->zfcUserAuthentication()->hasIdentity()) 
+    {
+      if ($this->zfcUserAuthentication()->getIdentity()->getId() != 2)
+      {
+        return $this->redirect()->toRoute('zfcuser');
+      }
+      else 
+      {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+          return $this->redirect()->toRoute('admin');
         }
-      } 
 
-      return $this->redirect()->toRoute('admin');
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+          $delete = $request->getPost('del', 'No');
+
+          if ($id != 2) {
+            if ($delete == 'Yes') {
+              $id = (int) $request->getPost('user_id');
+              $this->getCalendarTable()->deleteAll($id);
+              $this->getContactsTable()->deleteAll($id);
+              $this->getNotesTable()->deleteAll($id);
+              $this->getAdminTable()->deleteAdmin($id);
+            }
+          } 
+
+          return $this->redirect()->toRoute('admin');
+        }
+
+        return new ViewModel(array(
+          'user_id'    => $id,
+          'admin' => $this->getAdminTable()->getAdmin($id)
+        ));
+      }
     }
-
-    return new ViewModel(array(
-      'user_id'    => $id,
-      'admin' => $this->getAdminTable()->getAdmin($id)
-    ));
+    else 
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
   }
 
 

@@ -6,28 +6,22 @@ $this->headTitle($title);
 <p>
     <a href="<?php echo $this->url('notes', array('action'=>'add'));?>">Add new record</a>
 </p>
-
-<table class="table">
-<tr>
-    <th>Note ID</th>
-    <th>Title</th>
-    <th>Body</th>
-    <th>Created At</th>
-</tr>
+<ul class="notes col-md-12 clearfix">
 <?php foreach ($this->paginator as $record) : ?>
-    <tr>
-        <td><?php echo $this->escapeHtml($record->note_id);?></td>
-        <td><?php echo $this->escapeHtml($record->note_title);?></td>
-        <td><?php echo $this->escapeHtml($record->note_body);?></td>
-        <td><?php echo $this->escapeHtml($record->created_at);?></td>
-        <td>
-            <a href="<?php echo $this->url('notes', array('action'=>'edit', 'id' => $record->note_id));?>">Edit</a>
-            <a href="<?php echo $this->url('notes', array('action'=>'delete', 'id' => $record->note_id));?>">Delete</a>
-        </td>
-    </tr>
+    <li class="col-md-3">
+      <div>
+        <h4><?php echo $this->escapeHtml($record->note_title);?></h4>
+        <p><?php echo $this->escapeHtml($record->note_body);?></p>
+        <p><b>Last update:</b></p>
+        <p><?php echo $this->escapeHtml($record->created_at);?></p>
+        <p class="edit-delete">
+            <a class="btn btn-block btn-lg btn-inverse" href="<?php echo $this->url('notes', array('action'=>'edit', 'id' => $record->note_id));?>">Edit</a>
+            <a class="btn btn-block btn-lg btn-danger" href="<?php echo $this->url('notes', array('action'=>'delete', 'id' => $record->note_id));?>">Delete</a>
+        </p>
+      </div>
+    </li>
 <?php endforeach; ?>
-</table>
-
+</ul>
 <?php 
 echo $this->paginationControl(
   $this->paginator,

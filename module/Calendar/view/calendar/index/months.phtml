@@ -13,7 +13,7 @@ foreach ($this->records as $record)
 }
 ?>
 <ul class="calendar clearfix">
-  <li><a href='<?php echo $this->url('calendar', array('action'=>'months','date'=>$this->backward))?>'>Previous month</a></li>
+  <li><a class="month-navigation" href='<?php echo $this->url('calendar', array('action'=>'months','date'=>$this->backward))?>'>Previous month</a></li>
 <?php foreach ($this->calendar as $day) : ?>
     <li>
 <?php     
@@ -23,14 +23,14 @@ $fullDayDashTime = new DateTime($fullDayDash);
 $name = $fullDayDashTime->format('Y-m-d');
           if (in_array($name, $dates)) 
           {
-            $a = '<a class="day event-set" href="'. $this->url('calendar', array('action'=>'edit', 'date' => $name)).'">'. $fullDay  .'</a>';
+            $a = '<a class="day '.$day[1].' event-set" href="'. $this->url('calendar', array('action'=>'edit', 'date' => $name)).'"><span class="month-day">'. $day[0]  .'</span><span class="month">'. $day[1].'</span></a>';
             echo $a;
           } else { 
-            $a = '<a class="day event-not-set" href="'. $this->url('calendar', array('action'=>'add', 'date' => $name)).'">'. $fullDay .'</a>';
+            $a = '<a class="day '.$day[1].' event-not-set" href="'. $this->url('calendar', array('action'=>'add', 'date' => $name)).'"><span class="month-day">'. $day[0]  .'</span><span class="month">'. $day[1].'</span></a>';
             echo $a;
           }
 ?>
     </li>
 <?php endforeach; ?>
-  <li><a href='<?php echo $this->url('calendar', array('action'=>'months','date'=>$this->forward))?>'>Next month</a></li>
+  <li><a class="month-navigation" href='<?php echo $this->url('calendar', array('action'=>'months','date'=>$this->forward))?>'>Next month</a></li>
 </ul>

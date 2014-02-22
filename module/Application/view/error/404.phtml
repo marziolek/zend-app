@@ -1,5 +1,7 @@
-<h1><?php echo $this->translate('A 404 error occurred') ?></h1>
-<h2><?php echo $this->message ?></h2>
+<div class="err404">
+<h1><?php echo $this->translate('Ups...') ?></h1>
+<h2>There is no such page... Sorry!</h2>
+<!--<h6><?php echo $this->message ?></h6>-->
 
 <?php if (isset($this->reason) && $this->reason): ?>
 
@@ -24,13 +26,13 @@ switch ($this->reason) {
 }
 ?>
 
-<p><?php echo $reasonMessage ?></p>
+<!--<p><?php echo $reasonMessage ?></p>-->
 
 <?php endif ?>
 
 <?php if (isset($this->controller) && $this->controller): ?>
 
-<dl>
+<!--<dl>
     <dt><?php echo $this->translate('Controller') ?>:</dt>
     <dd><?php echo $this->escapeHtml($this->controller) ?>
 <?php
@@ -43,7 +45,7 @@ if (isset($this->controller_class)
 ?>
 </dd>
 </dl>
-
+-->
 <?php endif ?>
 
 <?php if (isset($this->display_exceptions) && $this->display_exceptions): ?>
@@ -100,8 +102,10 @@ if (isset($this->controller_class)
 
 <?php else: ?>
 
-<h3><?php echo $this->translate('No Exception available') ?></h3>
+<!-- <h3><?php echo $this->translate('No Exception available') ?></h3> -->
 
 <?php endif ?>
 
 <?php endif ?>
+<img src="http://designmodo.github.io/Flat-UI/images/icons/svg/toilet-paper.svg" alt="toilet paper 404" class="toilet-404"/>
+</div>

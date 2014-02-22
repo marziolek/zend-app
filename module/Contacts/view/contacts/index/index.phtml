@@ -7,25 +7,56 @@ $this->headTitle($title);
     <a href="<?php echo $this->url('contacts', array('action'=>'add'));?>">Add new contact</a>
 </p>
 
-<table class="table">
-<tr>
-    <th>Name</th>
-    <th>Surname</th>
-    <th>Description</th>
-    <th></th>
-</tr>
+<ul class="contacts col-md-12 clearfix">
 <?php foreach ($this->paginator as $record) : ?>
-    <tr>
-        <td><?php echo $this->escapeHtml($record->contact_name);?></td>
-        <td><?php echo $this->escapeHtml($record->contact_surname);?></td>
-        <td><?php echo $this->escapeHtml($record->contact_description);?></td>
-        <td>
-            <a href="<?php echo $this->url('contacts', array('action'=>'edit', 'id' => $record->contact_id));?>">Edit</a>
-            <a href="<?php echo $this->url('contacts', array('action'=>'delete', 'id' => $record->contact_id));?>">Delete</a>
-        </td>
-    </tr>
+  <li class="col-md-4">
+    <div>
+    <h4><?php echo $this->escapeHtml($record->contact_name).' '.$this->escapeHtml($record->contact_surname);?></h4>
+  <?php if ($this->escapeHtml($record->contact_description)) { ?>
+    <p>Description: <?php echo $this->escapeHtml($record->contact_description);?></p>
+  <?php } ?>
+  <?php if ($this->escapeHtml($record->contact_email)) { ?>
+    <p>Email: <?php echo $this->escapeHtml($record->contact_email);?></p>
+  <?php } ?>
+  <?php if ($this->escapeHtml($record->contact_phone)) { ?>
+    <p>Phone: <?php echo $this->escapeHtml($record->contact_phone);?></p>
+  <?php } ?>
+  <?php if ($this->escapeHtml($record->contact_phone2)) { ?>
+    <p>Phone2: <?php echo $this->escapeHtml($record->contact_phone2);?></p>
+  <?php } ?>
+  <?php if ($this->escapeHtml($record->contact_facebook) || $this->escapeHtml($record->contact_google)) { ?>
+    <p class="clearfix">
+    <?php if ($this->escapeHtml($record->contact_facebook)) { ?>
+      <a class="btn btn-block btn-lg btn-info" style="width: 65px; float: left;" href="<?php echo $this->escapeHtml($record->contact_facebook);?>">FB</a>
+    <?php } ?>
+    <?php if ($this->escapeHtml($record->contact_google)) { ?>
+      <a class="btn btn-block btn-lg btn-danger" style="width: 65px; float: left; margin: 0 0 0 5px;" href="<?php echo $this->escapeHtml($record->contact_google);?>">G+</a>
+    <?php } ?>
+    </p>
+  <?php } ?>
+  <?php if ($this->escapeHtml($record->contact_street) || $this->escapeHtml($record->contact_city) || $this->escapeHtml($record->contact_postal_code) || $this->escapeHtml($record->contact_country) ) { ?>
+    <p><b>Adress:</b></p>
+  <?php } ?>
+  <?php if ($this->escapeHtml($record->contact_street)) { ?>
+    <p>Street: <?php echo $this->escapeHtml($record->contact_street);?></p>
+  <?php } ?>
+  <?php if ($this->escapeHtml($record->contact_city)) { ?>
+    <p>City: <?php echo $this->escapeHtml($record->contact_city);?></p>
+  <?php } ?>
+  <?php if ($this->escapeHtml($record->contact_postal_code)) { ?>
+    <p>Postal code: <?php echo $this->escapeHtml($record->contact_postal_code);?></p>
+  <?php } ?>
+  <?php if ($this->escapeHtml($record->contact_country)) { ?>
+    <p>Country: <?php echo $this->escapeHtml($record->contact_country);?></p>
+  <?php } ?>
+    <p class="edit-delete" style="text-align: right">
+      <a class="btn btn-block btn-lg btn-inverse" href="<?php echo $this->url('contacts', array('action'=>'edit', 'id' => $record->contact_id));?>">Edit</a>
+      <a class="btn btn-block btn-lg btn-danger" href="<?php echo $this->url('contacts', array('action'=>'delete', 'id' => $record->contact_id));?>">Delete</a>
+    </p>
+    </div>
+  </li>
 <?php endforeach; ?>
-</table>
+</ul>
 
 <?php 
 echo $this->paginationControl(
